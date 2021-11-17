@@ -1,0 +1,10 @@
+flake8==4.0.1
+importlib-metadata==4.8.2
+mccabe==0.6.1
+pycodestyle==2.8.0
+pyflakes==2.4.0
+PyQt6==6.2.1
+PyQt6-Qt6==6.2.1
+PyQt6-sip==13.1.0
+python-dotenv==0.19.2
+zipp==3.6.0
