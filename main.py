@@ -12,7 +12,7 @@ config = load_dotenv(".env")
 server_port = config["default_server_port"]
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind('127.0.0.1', server_port)
+server.bind(('127.0.0.1', server_port))
 server.listen()
 
 md1.server()

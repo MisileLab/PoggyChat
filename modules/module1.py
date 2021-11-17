@@ -1,5 +1,6 @@
 import json
 from socket import socket
+import threading
 
 
 def setup_file(filename: str, default_value: str):
@@ -38,8 +39,30 @@ class PoggyChatClient:
         setup_file("whitelist_clients.json", "{}")
         self.whitelist_clients = json.loads(open("whitelist_clients.json", "r").read())
         self.server = server
+        self.receive_thread = None
+        self.send_thread = None
+
+    def receive_message_none_threading(self):
+        while True:
+            client, address = self.server.accept()
+            if not get_exist_in_list(self.whitelist_clients, address):
+                client.shutdown()
+
+            msg = client.recv(1024).decode('utf-8')
+            print(f'{address}: {msg}')
 
     def receive_message(self):
-        client, address = self.server.accept()
-        if not get_exist_in_list(self.whitelist_clients, address):
-            client.shutdown()
+        del(self.receive_thread)
+        self.receive_thread = threading.Thread(target=self.receive_message_non_threading)
+        self.receive_thread.start()
+
+    def send_message_none_threading(self, address: str, port: int):
+        self.server.connect((address, port))
+        while True:
+            msg = input("me: ")
+            self.server.send(msg.encode('utf-8'))
+
+    def send_message(self, address: str, port: int):
+        del(self.send_thread)
+        self.send_thread = threading.Thread(target=self.send_message_non_threading, args=(address, port,))
+        self.send_thread.start()
