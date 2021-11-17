@@ -1,0 +1,6 @@
+.venv
+venv
+.sourcery.yml
+.env
+*.pyc
+messages.toml
