@@ -4,4 +4,4 @@ venv
 .env
 *.pyc
 messages.toml
-whitelist_clients.json
+whitelist_clients.toml

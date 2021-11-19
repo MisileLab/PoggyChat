@@ -1,6 +1,6 @@
-import json
-from socket import socket
+from socket import socket, SHUT_RDWR
 import threading
+import tomli
 
 
 def setup_file(filename: str, default_value: str):
@@ -36,8 +36,8 @@ def get_exist_in_list(list: list or dict, value) -> bool:
 
 class PoggyChatClient:
     def __init__(self, server: socket, sendsocket: socket):
-        setup_file("whitelist_clients.json", "{}")
-        self.whitelist_clients = json.loads(open("whitelist_clients.json", "r").read())
+        setup_file("whitelist_clients.toml", 'whitelist_clients = ["192.168.0.1"]')
+        self.whitelist_clients = tomli.loads(open("whitelist_clients.toml", "r").read())["whitelist_clients"]
         self.server = server
         self.sendsocket = sendsocket
         self.receive_thread = None
@@ -47,7 +47,9 @@ class PoggyChatClient:
         while True:
             client, address = self.server.accept()
             if not get_exist_in_list(self.whitelist_clients, address):
-                client.shutdown(8)
+                client.shutdown(SHUT_RDWR)
+                
+            print(client.recv(1024))
 
             msg = client.recv(1024).decode('utf-8')
             print(f'{address}: {msg}')
