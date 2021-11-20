@@ -48,7 +48,7 @@ class PoggyChatClient:
             client, address = self.server.accept()
             if not get_exist_in_list(self.whitelist_clients, address):
                 client.shutdown(SHUT_RDWR)
-                
+
             print(client.recv(1024))
 
             msg = client.recv(1024).decode('utf-8')
