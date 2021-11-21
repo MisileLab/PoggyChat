@@ -19,19 +19,15 @@ def setup_file(filename: str, default_value: str):
 
 
 def get_exist_in_list(list: list or dict, value) -> bool:
-    """get value is exist or not exist in list"""
-    a = False
+    """get value is exist or not exist in list, dict"""
     if type(list) == list:
-        for i in list:
-            if i == value:
-                a = True
-                break
+        if value in list:
+            return True
     elif type(list) == dict:
         for i in list.values():
             if i == value:
-                a = True
-                break
-    return a
+                return True
+    return False
 
 
 class PoggyChatClient:
@@ -63,6 +59,8 @@ class PoggyChatClient:
         self.sendsocket.connect((address, port))
         while True:
             msg = input("me: ")
+            print(msg)
+            print(msg.encode('utf-8'))
             self.sendsocket.send(msg.encode('utf-8'))
 
     def send_message(self, address: str, port: int):
