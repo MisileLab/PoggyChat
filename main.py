@@ -6,7 +6,7 @@ import modules.module1 as md1
 
 default_dotenv = """default_server_port=25564"""
 md1.setup_file('.env', default_dotenv)
-md1.setup_file('whitelist_clients.toml', 'whitelist_clients = ["192.168.0.1"]')
+md1.setup_file('whitelist_clients.toml', 'whitelist_clients = ["192.168.0.1","127.0.0.1"]')
 
 load_dotenv(".env")
 
