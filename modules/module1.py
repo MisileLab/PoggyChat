@@ -18,13 +18,14 @@ def setup_file(filename: str, default_value: str):
         open(filename, 'w').write(default_value)
 
 
-def get_exist_in_list(list: list or dict, value) -> bool:
+def get_exist_in_list(data: list or dict, value) -> bool:
     """get value is exist or not exist in list, dict"""
-    if type(list) == list:
-        if value in list:
+    print(type(data))
+    if type(data) == list:
+        if data.index(value) > 0:
             return True
-    elif type(list) == dict:
-        for i in list.values():
+    elif type(data) == dict:
+        for i in data.values():
             if i == value:
                 return True
     return False
@@ -40,15 +41,20 @@ class PoggyChatClient:
         self.send_thread = None
 
     def receive_message_none_threading(self):
+        acc_count = 0
         while True:
             client, address = self.server.accept()
-            if not get_exist_in_list(self.whitelist_clients, address):
+            acc_count = acc_count + 1
+            print("ACCEPTED:", acc_count)
+            if not get_exist_in_list(self.whitelist_clients, address[0]):
+                print("SHUTDOWN")
                 client.shutdown(SHUT_RDWR)
 
-            print(client.recv(1024))
-
-            msg = client.recv(1024).decode('utf-8')
-            print(f'{address}: {msg}')
+            while True:
+                msg = client.recv(1024).decode('utf-8')
+                print("RECEIVE RESULT:", f'{address}: {msg}')
+                if(not msg):
+                    break
 
     def receive_message(self):
         del(self.receive_thread)
@@ -57,10 +63,10 @@ class PoggyChatClient:
 
     def send_message_none_threading(self, address: str, port: int):
         self.sendsocket.connect((address, port))
+        print("READY FOR SENDING", self.sendsocket)
         while True:
             msg = input("me: ")
-            print(msg)
-            print(msg.encode('utf-8'))
+            print("SEND:", msg.encode('utf-8'))
             self.sendsocket.send(msg.encode('utf-8'))
 
     def send_message(self, address: str, port: int):
