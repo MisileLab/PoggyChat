@@ -41,13 +41,10 @@ class PoggyChatClient:
         self.send_thread = None
 
     def receive_message_none_threading(self):
-        acc_count = 0
         while True:
             client, address = self.server.accept()
-            acc_count = acc_count + 1
-            print("ACCEPTED:", acc_count)
             if not get_exist_in_list(self.whitelist_clients, address[0]):
-                print("SHUTDOWN")
+                print("shutdown socket {address}")
                 client.shutdown(SHUT_RDWR)
 
             while True:
@@ -63,10 +60,9 @@ class PoggyChatClient:
 
     def send_message_none_threading(self, address: str, port: int):
         self.sendsocket.connect((address, port))
-        print("READY FOR SENDING", self.sendsocket)
+        print("can send now")
         while True:
             msg = input("me: ")
-            print("SEND:", msg.encode('utf-8'))
             self.sendsocket.send(msg.encode('utf-8'))
 
     def send_message(self, address: str, port: int):
