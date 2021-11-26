@@ -47,7 +47,6 @@ class PoggyChatClient:
             if not get_exist_in_list(self.whitelist_clients, address[0]):
                 print("shutdown socket {address}")
                 client.shutdown(SHUT_RDWR)
-            self.send_message(address[0], address[1], client)
 
             while True:
                 msg = client.recv(1024).decode('utf-8')
