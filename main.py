@@ -13,25 +13,22 @@ parser = argparse.ArgumentParser(description="This is PoggyChat.")
 
 parser.add_argument('--port', required=False, default=int(os.getenv("default_port")), type=int,
                     help="Set Port, only number, need port when send mode")
-parser.add_argument('--ip', required=True, type=str, hlep="Set the IP that send the socket")
+parser.add_argument('--ip', required=True, type=str, help="Set the IP that send the socket")
 parser.add_argument('--send', required=False, default=False, type=bool, help="Send Mode, Incompatible with Receive " +
                     "mode, bool type")
-parser.add_argument('--receive', requried=False, default=False, type=bool, help="Receive Mode, " +
+parser.add_argument('--receive', required=False, default=False, type=bool, help="Receive Mode, " +
                     "Incompatible With Send mode, bool type")
 args = parser.parse_args()
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-port = args.port
 if args.receive == args.send:
     raise ValueError("receive and send arg values are same.")
 receive = args.receive is True
-server.bind((args.ip, port))
-server.listen()
 
 sendsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-a = md1.PoggyChatClient(server, sendsocket)
+a = md1.PoggyChatClient()
 if receive:
-    a.receive_message()
+    a.receive_message(args.ip, args.port)
 else:
-    a.send_message(args.ip, port)
+    a.send_message(args.ip, args.port)

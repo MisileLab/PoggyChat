@@ -1,4 +1,5 @@
 from socket import socket, SHUT_RDWR
+import socket as socketer
 import threading
 import tomli
 
@@ -33,7 +34,7 @@ def get_exist_in_list(data: list or dict, value) -> bool:
 
 class PoggyChatClient:
     def __init__(self):
-        setup_file("whitelist_clients.toml", 'whitelist_clients = ["192.168.0.1"]')
+        setup_file("whitelist_clients.toml", 'whitelist_clients = ["192.168.0.1", "127.0.0.1"]')
         self.whitelist_clients = tomli.loads(open("whitelist_clients.toml", "r").read())["whitelist_clients"]
         self.server = None
         self.sendsocket = None
@@ -54,11 +55,11 @@ class PoggyChatClient:
                 if(not msg):
                     break
 
-    def receive_message(self, socket: socket = None):
-        socket = self.server or None
-        if socket is None:
-            raise ValueError("does not have socket or self.server")
-        self.sendsocket = socket
+    def receive_message(self, ip: int, port: int):
+        if self.server is None:
+            self.server = socket(socketer.AF_INET, socketer.SOCK_STREAM)
+        self.server.bind((ip, port))
+        self.server.listen()
         del(self.receive_thread)
         self.receive_thread = threading.Thread(target=self.receive_message_none_threading)
         self.receive_thread.start()
@@ -70,11 +71,9 @@ class PoggyChatClient:
             msg = input("me: ")
             self.sendsocket.send(msg.encode('utf-8'))
 
-    def send_message(self, address: str, port: int, socket: socket = None):
-        socket = self.sendsocket or None
-        if socket is None:
-            raise ValueError("does not have socket or self.sendsocket")
-        self.sendsocket = socket
+    def send_message(self, address: str, port: int):
+        if self.sendsocket is None:
+            self.sendsocket = socket(socketer.AF_INET, socketer.SOCK_STREAM)
         del(self.send_thread)
         self.send_thread = threading.Thread(target=self.send_message_none_threading, args=(address, port,))
         self.send_thread.start()
