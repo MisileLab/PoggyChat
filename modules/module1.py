@@ -1,4 +1,4 @@
-from socket import socket, SHUT_RDWR
+import socket
 import threading
 import tomli
 
@@ -20,7 +20,6 @@ def setup_file(filename: str, default_value: str):
 
 def get_exist_in_list(data: list or dict, value) -> bool:
     """get value is exist or not exist in list, dict"""
-    print(type(data))
     if type(data) == list:
         if data.index(value) > 0:
             return True
@@ -32,11 +31,11 @@ def get_exist_in_list(data: list or dict, value) -> bool:
 
 
 class PoggyChatClient:
-    def __init__(self, server: socket, sendsocket: socket):
-        setup_file("whitelist_clients.toml", 'whitelist_clients = ["192.168.0.1"]')
+    def __init__(self):
+        setup_file("whitelist_clients.toml", 'whitelist_clients = ["192.168.0.1", "127.0.0.1"]')
         self.whitelist_clients = tomli.loads(open("whitelist_clients.toml", "r").read())["whitelist_clients"]
-        self.server = server
-        self.sendsocket = sendsocket
+        self.server = None
+        self.sendsocket = None
         self.receive_thread = None
         self.send_thread = None
 
@@ -44,28 +43,53 @@ class PoggyChatClient:
         while True:
             client, address = self.server.accept()
             if not get_exist_in_list(self.whitelist_clients, address[0]):
-                print("shutdown socket {address}")
-                client.shutdown(SHUT_RDWR)
+                print(f"shutdown socket {address}")
+                client.shutdown(socket.SHUT_RDWR)
 
+            send_thread = threading.Thread(target=self.only_socket_send_message, args=(client, ))
+            send_thread.start()
             while True:
                 msg = client.recv(1024).decode('utf-8')
-                print("RECEIVE RESULT:", f'{address}: {msg}')
-                if(not msg):
+                print(f'{address[0]}: {msg}')
+                if (not msg):
                     break
 
-    def receive_message(self):
+    def receive_message(self, ip: int, port: int):
+        print(f'Run server using {port} port.')
+        if self.server is None:
+            self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server.bind((ip, port))
+        self.server.listen()
         del(self.receive_thread)
         self.receive_thread = threading.Thread(target=self.receive_message_none_threading)
         self.receive_thread.start()
 
     def send_message_none_threading(self, address: str, port: int):
         self.sendsocket.connect((address, port))
-        print("can send now")
+        print("Can send now")
+        send_thread = threading.Thread(target=self.only_socket_receive_message, args=(self.sendsocket,))
+        send_thread.start()
         while True:
             msg = input("me: ")
             self.sendsocket.send(msg.encode('utf-8'))
 
     def send_message(self, address: str, port: int):
+        print(f'Connect to {address}:{port}')
+        if self.sendsocket is None:
+            self.sendsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         del(self.send_thread)
         self.send_thread = threading.Thread(target=self.send_message_none_threading, args=(address, port,))
         self.send_thread.start()
+
+    @staticmethod
+    def only_socket_send_message(client: socket.socket):
+        while True:
+            msg = input("me: ")
+            client.send(msg.encode('utf-8'))
+
+    @staticmethod
+    def only_socket_receive_message(client: socket.socket):
+        while True:
+            message = client.recv(1024).decode('utf-8')
+            address = client.getsockname()[0]
+            print(f"{address}: {message}")
