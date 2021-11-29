@@ -24,11 +24,12 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 if args.receive == args.send:
     raise ValueError("receive and send arg values are same.")
 receive = args.receive is True
+send = args.send is True
 
 sendsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 a = md1.PoggyChatClient()
 if receive:
     a.receive_message(args.ip, args.port)
-else:
+elif send:
     a.send_message(args.ip, args.port)
