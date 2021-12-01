@@ -4,14 +4,6 @@
 Open Source Chatting Platform  
 ![a](https://wakatime.com/badge/user/09162ab5-5193-456c-a9ac-2fb02b26b6f8/project/98620e42-b08e-46fa-b7da-5fe81a0179c6.svg)
 
-This Program Not have many feature, This is Alpha!
-
-## To-Do
-
-- [ ] Make Program Working
-- [ ] Parse Args and Working Program
-- [ ] Simple GUI With PoggyChat (Will has PoggyChat-CLI)
-
 ## Donate
 
 [Donate Me with Crypto](https://github.com/misilelab/donatewithcrypto)
