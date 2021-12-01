@@ -1,14 +1,15 @@
 [tool.poetry]
 name = "poggychat"
-version = "0.0.3"
+version = "0.0.4a"
 description = "Fully Open Source Chatting App & Server"
 authors = ["MisileLaboratory"]
 license = "MisileLab License"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "3.10"
 python-dotenv = "^0.19.2"
 tomli = "^1.2.2"
+PySide6 = "^6.2.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0.1"
