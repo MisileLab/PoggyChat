@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "poggychat"
-version = "0.0.4a"
+version = "0.0.4"
 description = "Fully Open Source Chatting App & Server"
 authors = ["MisileLaboratory"]
 license = "MisileLab License"
