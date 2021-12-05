@@ -1,7 +1,7 @@
 import socket
 import threading
 import tomli
-from PySide6.QtWidgets import QApplication, QDialog, QHBoxLayout, QLayout, QLineEdit, QPushButton, QTextEdit, QVBoxLayout
+from PySide6.QtWidgets import QApplication, QDialog, QHBoxLayout, QLineEdit, QPushButton, QTextEdit, QVBoxLayout
 import sys
 
 
