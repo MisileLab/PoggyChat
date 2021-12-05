@@ -1,7 +1,7 @@
 import socket
 import threading
 import tomli
-from PySide6.QtWidgets import QApplication, QDialog, QHBoxLayout, QTextEdit, QVBoxLayout
+from PySide6.QtWidgets import QApplication, QDialog, QHBoxLayout, QLayout, QLineEdit, QPushButton, QTextEdit, QVBoxLayout
 import sys
 
 
@@ -105,18 +105,30 @@ class PoggyChatGUI(QDialog):
     def setupui(self):
 
         # Set chat screen
-        self.setGeometry(100, 100, 300, 100)
+        self.setGeometry(206, 206, 206, 206)
         self.setWindowTitle("PoggyChat")
         self.chathbox = QHBoxLayout()
+        self.typechathbox = QHBoxLayout()
         self.chatvbox = QVBoxLayout()
         self.chatscreen = QTextEdit()
+        self.chatbutton = QPushButton('send')
+        self.chatting = QLineEdit()
+        # self.chatbutton.clicked.connect(self.click_method)
+
+        self.typechathbox.addWidget(self.chatting)
+        self.typechathbox.addWidget(self.chatbutton)
 
         self.chathbox.addStretch(1)
         self.chathbox.addWidget(self.chatscreen)
         self.chathbox.addStretch(1)
+
         self.chatvbox.addStretch(1)
         self.chatvbox.addLayout(self.chathbox)
-        self.chatvbox.addStretch(3)
+        self.chatvbox.addStretch(1)
+        self.chatvbox.addLayout(self.typechathbox)
+        self.chatvbox.addStretch(1)
+
+        # final layout set
         self.setLayout(self.chatvbox)
 
 
