@@ -138,6 +138,12 @@ class PoggyChatGUI(QDialog):
         self.setLayout(self.chatvbox)
 
 
+class PoggyChatConnectIPPort(QDialog):
+    # Will make
+    def __init__(self):
+        print("a")
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     pogchat = PoggyChatGUI()
