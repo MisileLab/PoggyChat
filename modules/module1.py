@@ -3,8 +3,8 @@ import threading
 import tomli
 
 # GUI import
-from PySide6.QtWidgets import QApplication, QDialog, QHBoxLayout, QLineEdit, QPushButton, QTextEdit
-from PySide6.QtWidgets import QVBoxLayout
+from PySide6.QtWidgets import QApplication, QDialog, QHBoxLayout, QLabel, QLineEdit, QVBoxLayout, QTextEdit
+from PySide6.QtWidgets import QPushButton
 
 import sys
 
@@ -115,9 +115,10 @@ class PoggyChatGUI(QDialog):
         self.typechathbox = QHBoxLayout()
         self.chatvbox = QVBoxLayout()
         self.chatscreen = QTextEdit()
-        self.chatbutton = QPushButton('send')
+        self.chatbutton = QPushButton('connect')
         self.chatting = QLineEdit()
-        # self.chatbutton.clicked.connect(self.click_method)
+        self.screenpoggyipport = PoggyChatConnectIPPort()
+        self.chatbutton.clicked.connect(self.screenpoggyipport.setui)
 
         self.chatscreen.setReadOnly(True)
 
@@ -139,9 +140,30 @@ class PoggyChatGUI(QDialog):
 
 
 class PoggyChatConnectIPPort(QDialog):
-    # Will make
-    def __init__(self):
-        print("a")
+    def setui(self):
+        self.setFixedSize(220, 100)
+
+        self.ipedit = QLineEdit()
+        self.portedit = QLineEdit()
+        self.iptext = QLabel("ip")
+        self.porttext = QLabel("port")
+        self.connectbutton = QPushButton('connect')
+
+        self.screenvbox = QHBoxLayout()
+        self.screenhbox = QVBoxLayout()
+        self.screenhbox2 = QVBoxLayout()
+
+        self.screenhbox.addWidget(self.iptext, stretch=5)
+        self.screenhbox.addWidget(self.ipedit, stretch=5)
+
+        self.screenhbox2.addWidget(self.porttext, stretch=5)
+        self.screenhbox2.addWidget(self.portedit, stretch=5)
+
+        self.screenvbox.addLayout(self.screenhbox, stretch=30)
+        self.screenvbox.addLayout(self.screenhbox2, stretch=30)
+
+        self.setLayout(self.screenvbox)
+        self.show()
 
 
 if __name__ == "__main__":
