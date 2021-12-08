@@ -149,18 +149,22 @@ class PoggyChatConnectIPPort(QDialog):
         self.porttext = QLabel("port")
         self.connectbutton = QPushButton('connect')
 
-        self.screenvbox = QHBoxLayout()
-        self.screenhbox = QVBoxLayout()
-        self.screenhbox2 = QVBoxLayout()
+        self.screenvbox = QVBoxLayout()
+        self.screenhbox = QHBoxLayout()
+        self.screenhbox2 = QHBoxLayout()
+        self.screenhbox3 = QHBoxLayout()
 
         self.screenhbox.addWidget(self.iptext, stretch=5)
-        self.screenhbox.addWidget(self.ipedit, stretch=5)
+        self.screenhbox.addWidget(self.porttext, stretch=5)
 
-        self.screenhbox2.addWidget(self.porttext, stretch=5)
+        self.screenhbox2.addWidget(self.ipedit, stretch=5)
         self.screenhbox2.addWidget(self.portedit, stretch=5)
+
+        self.screenhbox3.addWidget(self.connectbutton, stretch=5)
 
         self.screenvbox.addLayout(self.screenhbox, stretch=30)
         self.screenvbox.addLayout(self.screenhbox2, stretch=30)
+        self.screenvbox.addLayout(self.screenhbox3, stretch=50)
 
         self.setLayout(self.screenvbox)
         self.show()
