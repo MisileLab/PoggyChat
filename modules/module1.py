@@ -104,6 +104,9 @@ class PoggyChatClient:
 class PoggyChatGUI(QDialog):
     def __init__(self):
         super().__init__()
+        self.ip = None
+        self.port = None
+        self.poggychatclient = PoggyChatClient()
         self.setupui()
 
     def setupui(self):
@@ -137,15 +140,22 @@ class PoggyChatGUI(QDialog):
 
         # final layout set
         self.setLayout(self.chatvbox)
-        
-    def connect(self):
-        print(self.screenpoggyipport.ipedit.text())
-        print(self.screenpoggyipport.portedit.text())
+
+    def connectchat(self):
+        self.address = self.screenpoggyipport.ipedit.text()
+        self.port = self.screenpoggyipport.portedit.text()
+        try:
+            self.poggychatclient.send_message(self.address, self.port)
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Does server opened?")
+
 
 class PoggyChatConnectIPPort(QDialog):
     def __init__(self, parent):
+        self.parent = parent
         super(PoggyChatConnectIPPort, self).__init__(parent)
-    
+
     def setui(self):
         self.setFixedSize(220, 100)
 
@@ -174,10 +184,7 @@ class PoggyChatConnectIPPort(QDialog):
 
         self.setLayout(self.screenvbox)
         self.show()
-        self.connectbutton.clicked.connect(self.parent().connect)
-        
-    def connect(self):
-        print("connect2")
+        self.connectbutton.clicked.connect(self.parent().connectchat)
 
 
 if __name__ == "__main__":
