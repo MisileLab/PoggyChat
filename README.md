@@ -35,7 +35,7 @@ Currently use discord, facebook that not open source and has problem.
 
 ## So How Install?
 
-First, Download This Repository.
-Next, Install Poetry [How?](https://github.com/python-poetry/poetry)
-Next, Install dependency with ```poetry install```
+First, Download This Repository.  
+Next, Install Poetry [How?](https://github.com/python-poetry/poetry)  
+Next, Install dependency with ```poetry install```  
 Finally, Run with ```poetry run python main.py <arguments>```
