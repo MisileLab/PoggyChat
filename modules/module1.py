@@ -117,7 +117,7 @@ class PoggyChatGUI(QDialog):
         self.chatscreen = QTextEdit()
         self.chatbutton = QPushButton('connect')
         self.chatting = QLineEdit()
-        self.screenpoggyipport = PoggyChatConnectIPPort()
+        self.screenpoggyipport = PoggyChatConnectIPPort(self)
         self.chatbutton.clicked.connect(self.screenpoggyipport.setui)
 
         self.chatscreen.setReadOnly(True)
@@ -137,9 +137,15 @@ class PoggyChatGUI(QDialog):
 
         # final layout set
         self.setLayout(self.chatvbox)
-
+        
+    def connect(self):
+        print(self.screenpoggyipport.ipedit.text())
+        print(self.screenpoggyipport.portedit.text())
 
 class PoggyChatConnectIPPort(QDialog):
+    def __init__(self, parent):
+        super(PoggyChatConnectIPPort, self).__init__(parent)
+    
     def setui(self):
         self.setFixedSize(220, 100)
 
@@ -168,6 +174,10 @@ class PoggyChatConnectIPPort(QDialog):
 
         self.setLayout(self.screenvbox)
         self.show()
+        self.connectbutton.clicked.connect(self.parent().connect)
+        
+    def connect(self):
+        print("connect2")
 
 
 if __name__ == "__main__":
