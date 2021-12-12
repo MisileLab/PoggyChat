@@ -149,6 +149,8 @@ class PoggyChatGUI(QDialog):
         except Exception as e:
             print(f"Error: {e}")
             print("Does server opened?")
+        else:
+            self.chatbutton.setText("send")
 
 
 class PoggyChatConnectIPPort(QDialog):
