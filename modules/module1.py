@@ -143,7 +143,7 @@ class PoggyChatGUI(QDialog):
 
     def connectchat(self):
         self.address = self.screenpoggyipport.ipedit.text()
-        self.port = self.screenpoggyipport.portedit.text()
+        self.port = int(self.screenpoggyipport.portedit.text())
         try:
             self.poggychatclient.send_message(self.address, self.port)
         except Exception as e:
@@ -184,7 +184,7 @@ class PoggyChatConnectIPPort(QDialog):
 
         self.setLayout(self.screenvbox)
         self.show()
-        self.connectbutton.clicked.connect(self.parent().connectchat)
+        self.connectbutton.clicked.connect(self.parent.connectchat)
 
 
 if __name__ == "__main__":
