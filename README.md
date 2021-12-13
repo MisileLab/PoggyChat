@@ -1,7 +1,8 @@
 # PoggyChat
 
 Fully open source chatting platform  
-![a](https://wakatime.com/badge/user/09162ab5-5193-456c-a9ac-2fb02b26b6f8/project/98620e42-b08e-46fa-b7da-5fe81a0179c6.svg)
+![a](https://wakatime.com/badge/user/09162ab5-5193-456c-a9ac-2fb02b26b6f8/project/98620e42-b08e-46fa-b7da-5fe81a0179c6.svg)  
+[Server version](https://github.com/misilelab/poggychat-server)
 
 ## Why open source?
 
