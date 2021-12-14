@@ -8,7 +8,7 @@ license = "MisileLab License"
 [tool.poetry.dependencies]
 python = "^3.10"
 python-dotenv = "^0.19.2"
-tomli = "^1.2.2"
+tomli = "^2.0.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0.1"
