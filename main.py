@@ -1,4 +1,3 @@
-import socket
 from dotenv import load_dotenv
 import os
 import argparse
@@ -18,14 +17,12 @@ parser.add_argument('--receive', required=False, default=False, type=bool,
                     help="true = first-receive mode, false = first-send mode")
 args = parser.parse_args()
 
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 if args.receive == args.send:
     raise ValueError("receive and send arg values are same.")
 receive = args.receive is True
 
-sendsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
 a = md1.PoggyChatClient()
+
 if receive:
     a.receive_message(args.ip, args.port)
 else:

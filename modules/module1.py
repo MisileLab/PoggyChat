@@ -7,6 +7,7 @@ from PySide6.QtWidgets import QApplication, QDialog, QHBoxLayout, QLabel, QLineE
 from PySide6.QtWidgets import QPushButton
 
 import sys
+import json
 
 
 def setup_file(filename: str, default_value: str):
@@ -19,9 +20,12 @@ def setup_file(filename: str, default_value: str):
     default_value: str, when file is not exist, this value will write in the created file.
     """
     try:
-        open(filename)
+        f = open(filename)
     except FileNotFoundError:
-        open(filename, 'w').write(default_value)
+        f = open(filename, 'w')
+        f.write(default_value)
+    finally:
+        f.close()
 
 
 def get_exist_in_list(data: list or dict, value) -> bool:
@@ -39,7 +43,9 @@ def get_exist_in_list(data: list or dict, value) -> bool:
 class PoggyChatClient:
     def __init__(self):
         setup_file("whitelist_clients.toml", 'whitelist_clients = ["192.168.0.1", "127.0.0.1"]')
-        self.whitelist_clients = tomli.loads(open("whitelist_clients.toml", "r").read())["whitelist_clients"]
+        with open("whitelist_clients.toml", "r") as f:
+            a = f.read()
+        self.whitelist_clients = tomli.loads(a)["whitelist_clients"]
         self.server = None
         self.sendsocket = None
         self.receive_thread = None
@@ -61,6 +67,7 @@ class PoggyChatClient:
                     break
 
     def receive_message(self, ip: int, port: int):
+        # detect sender address in received json message
         print(f'Run server using {port} port.')
         if self.server is None:
             self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -76,8 +83,10 @@ class PoggyChatClient:
         send_thread = threading.Thread(target=self.only_socket_receive_message, args=(self.sendsocket,))
         send_thread.start()
         while True:
-            msg = input("me: ")
-            self.sendsocket.send(msg.encode('utf-8'))
+            msg = input("me: ").encode('utf-8')
+            msgdict = {"msg": msg, "toaddr": address}
+            msgjson = json.dumps(msgdict)
+            self.sendsocket.send(msgjson)
 
     def send_message(self, address: str, port: int):
         print(f'Connect to {address}:{port}')

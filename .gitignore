@@ -5,3 +5,4 @@ venv
 *.pyc
 messages.toml
 whitelist_clients.toml
+.dccache
