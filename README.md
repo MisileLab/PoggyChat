@@ -1,11 +1,8 @@
 # PoggyChat
 
-Fully open source chatting platform  
-![a](https://wakatime.com/badge/user/09162ab5-5193-456c-a9ac-2fb02b26b6f8/project/98620e42-b08e-46fa-b7da-5fe81a0179c6.svg)
-
-## Donate
-
-[Donate me with crypto](https://github.com/misilelab/donatewithcrypto)
+Fully open source chatting platform  
+![a](https://wakatime.com/badge/user/09162ab5-5193-456c-a9ac-2fb02b26b6f8/project/98620e42-b08e-46fa-b7da-5fe81a0179c6.svg)  
+[Server version](https://github.com/misilelab/poggychat-server)
 
 ## Why open source?
 
@@ -16,12 +13,12 @@ Fully open source chatting platform  
 
 ## Why PoggyChat?
 
-Currently, use discord, facebook that not open source and has a problem.
+Currently, use discord, facebook that not open source and has a problem.
 
 ### Discord problems
 
-1. Discord has many errors in the **Official** Linux Version.
-2. Rendering 1920x1080 video with my GPU but Why I need to pay nitro?
+1. Discord has many errors in the **Official** Linux Version.
+2. Rendering 1920x1080 video with my GPU but Why I need to pay nitro?
 3. Discord Developer does not provide a good API.
 
 ### Facebook problems
@@ -32,9 +29,13 @@ Currently, use discord, facebook that not open source and has a problem.
 
 > ~ that in the first quarter of 2015, seven hundred and twenty-five of the 1000 most-viewed videos on Facebook were stolen. - Kurzgesagt
 
+## What need for install?
+
+Poetry and Git, Python
+
 ## So how install?
 
-First, Download this repository.  
-Next, Install Poetry [How?](https://github.com/python-poetry/poetry)  
+First, Clone this git repository using ```git clone```  
 Next, Install dependency with ```poetry install```  
-Finally, Run with ```poetry run python main.py <arguments>```  
+Next, Go to poetry venv using ```poetry shell```  
+Finally, Run Poggychat using ```python main.py```  
